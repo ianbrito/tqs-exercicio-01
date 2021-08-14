@@ -25,14 +25,6 @@ public class GerenciadoraContasTest {
     public GerenciadoraContasTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         List<ContaCorrente> contasDoBanco = new ArrayList<>();
@@ -44,61 +36,54 @@ public class GerenciadoraContasTest {
         this.gerenciadoraContas = new GerenciadoraContas(contasDoBanco);
     }
 
-    @After
-    public void tearDown() {
+    @Test
+    public void testTransfereValor_SaldoPositivo() {
+
+        int contaOrigem = 1;
+        int contaDestino = 2;
+
+        boolean success = this.gerenciadoraContas.transfereValor(contaOrigem, 50, contaDestino);
+
+        assertTrue(success);
     }
 
     @Test
-    public void testTransfereValor() {
-        int contaOrigem = 1;
-        int contaDestino = 2;
-        
-        boolean success = this.gerenciadoraContas.transfereValor(contaOrigem, 50, contaDestino);
-        
-        assertTrue(success);
+    public void testTransfereValor_SaldoNegativo() {
+        int contaOrigem = 2;
+        int contaDestino = 1;
+
+        boolean success = this.gerenciadoraContas.transfereValor(contaOrigem, 100, contaDestino);
+
+        assertFalse(success);
     }
-    
-    /**
-     * Test Transfere Valor Valor Maior Que O Saldo
-     */
+
     @Test
     public void testTransfereValorValorMaiorQueOSaldo() {
         int contaOrigem = 1;
         int contaDestino = 2;
-        
+
         boolean success = this.gerenciadoraContas.transfereValor(contaOrigem, 1000, contaDestino);
-        
+
         assertFalse(success);
     }
-    
-    
-    @Test
-    public void testTransfereValorContaSemSaldo() {
-        int contaOrigem = 2;
-        int contaDestino = 1;
-        
-        boolean success = this.gerenciadoraContas.transfereValor(contaOrigem, 100, contaDestino);
-        
-        assertFalse(success);
-    }
-    
+
     @Test
     public void testTransfereValorContaOrigemInexistente() {
         int contaOrigem = 4;
         int contaDestino = 1;
-        
+
         boolean success = this.gerenciadoraContas.transfereValor(contaOrigem, 100, contaDestino);
-        
+
         assertFalse(success);
     }
-    
+
     @Test
     public void testTransfereValorContaDestinoInexistente() {
         int contaOrigem = 1;
         int contaDestino = 4;
-        
+
         boolean success = this.gerenciadoraContas.transfereValor(contaOrigem, 100, contaDestino);
-        
+
         assertFalse(success);
     }
 }

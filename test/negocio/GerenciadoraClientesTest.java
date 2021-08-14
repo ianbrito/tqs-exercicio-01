@@ -42,12 +42,7 @@ public class GerenciadoraClientesTest {
     }
 
     @Test
-    public void testGetClientesDoBanco() {
-        fail("Teste não realiazdo");
-    }
-
-    @Test
-    public void testPesquisaCliente() {
+    public void testPesquisaClienteExistente() {
 
         Cliente cliente = this.gerenciadoraClientes.pesquisaCliente(1);
 
@@ -56,16 +51,11 @@ public class GerenciadoraClientesTest {
     }
 
     @Test
-    public void testPequisaClienteInexistente() {
+    public void testPesquisaClienteInexistente() {
 
         Cliente cliente = this.gerenciadoraClientes.pesquisaCliente(4);
 
         assertNull(cliente);
-    }
-
-    @Test
-    public void testAdicionaCliente() {
-        fail("Teste não realiazdo");
     }
 
     @Test
@@ -81,31 +71,23 @@ public class GerenciadoraClientesTest {
     }
 
     @Test
-    public void testClienteAtivo() {
-        fail("Teste não realiazdo");
-    }
-
-    @Test
-    public void testLimpa() {
-        fail("Teste não realiazdo");
-    }
-
-    @Test
-    public void testValidaIdadeIdadeValida() throws Exception {
+    public void testValidadeIdadeValida() throws Exception {
         Cliente cliente = new Cliente(1, "Ian Brito", 18, "ian@gmail.com", 1, true);
         assertTrue(this.gerenciadoraClientes.validaIdade(cliente.getIdade()));
     }
 
     @Test
-    public void testValidaIdadeIdadeInvalida() throws Exception {
+    public void testValidaIdadeInvalidaMetodo1() throws Exception {
         exception.expect(IdadeNaoPermitidaException.class);
-        this.gerenciadoraClientes.validaIdade(17);
+        Cliente cliente = new Cliente(1, "Ian Brito", 17, "ian@gmail.com", 1, true);
+        this.gerenciadoraClientes.validaIdade(cliente.getIdade());
     }
 
     @Test
-    public void testValidaIdadeIdadeInvalidaInstanceOfIdadeNaoPermitidaException() throws Exception {
+    public void testValidaIdadeInvalidaMetodo2() throws Exception {
         try {
-            boolean valida = this.gerenciadoraClientes.validaIdade(17);
+            Cliente cliente = new Cliente(1, "Ian Brito", 17, "ian@gmail.com", 1, true);
+            this.gerenciadoraClientes.validaIdade(cliente.getIdade());
         } catch (Exception e) {
             assertTrue(e instanceof IdadeNaoPermitidaException);
         }
